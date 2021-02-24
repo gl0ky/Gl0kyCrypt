@@ -93,14 +93,22 @@ def readfile():
 
 def writefile(txt):
     
-    print("")
-    out = input("Especifique el nombre del archivo de salida: ")
-    f = open("./output/"+out, "w")
-    f.write(txt)
-    f.close()
     directory = outcommand("pwd") 
-    print("")
-    print("Archivo guardado en " + directory.strip('\n') + "/output/" + out)
+    if os.path.isdir(directory.strip('\n')+"/output/"):
+    
+        print("")
+        out = input("Especifique el nombre del archivo de salida: ")
+        f = open("./output/"+out, "w")
+        f.write(txt)
+        f.close()
+            
+        print("")
+        print("Archivo guardado en " + directory.strip('\n') + "/output/" + out)
+            
+    else:
+            
+        os.mkdir(directory.strip('\n')+"/output/")
+        writefile(txt)
 
 def opt1():
     
