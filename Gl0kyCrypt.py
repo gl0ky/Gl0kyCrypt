@@ -4,8 +4,32 @@ from io import open
 import os
 from subprocess import PIPE, run
 import time
+import platform
+import sys
+
+def clearconsole():
+
+    if platform.system() == "Linux":
+
+        os.system("clear")
+
+    if platform.system() == "Windows":
+
+        os.system("cls")
+
+
+def getpwd():
+
+    if platform.system() == "Linux":
+
+        return outcommand("pwd")
+
+    if platform.system() == "Windows":
+
+        return outcommand("echo %cd%")
 
 def outcommand(command):
+
     result = run(command, stdout=PIPE, stderr=PIPE, universal_newlines=True, shell=True)
     return result.stdout
 
@@ -93,7 +117,7 @@ def readfile():
 
 def writefile(txt):
     
-    directory = outcommand("pwd") 
+    directory = getpwd()
     if os.path.isdir(directory.strip('\n')+"/output/"):
     
         print("")
@@ -103,7 +127,14 @@ def writefile(txt):
         f.close()
             
         print("")
-        print("Archivo guardado en " + directory.strip('\n') + "/output/" + out)
+
+        if platform.system() == "Linux":
+
+            print("Archivo guardado en " + directory.strip('\n') + "/output/" + out)
+
+        if platform.system() == "Windows":
+
+            print("Archivo guardado en " + directory.strip('\n') + "\output" + chr(92) + out)
             
     else:
             
@@ -121,6 +152,8 @@ def opt1():
         txt = cesarenc(shift,txt)
 
     writefile(txt)
+    print("")
+    input("Presione cualquier tecla para continuar...")
 
 def opt2():
     
@@ -133,6 +166,8 @@ def opt2():
         txt = cesardec(shift,txt)
     
     writefile(txt)
+    print("")
+    input("Presione cualquier tecla para continuar...")
 
 def opt3():
     
@@ -166,8 +201,8 @@ def opt4():
 
 def menu():
     
-    os.system("clear")
-    print ("Gl0kyCrypt v1.0")
+    clearconsole()
+    print ("Gl0kyCrypt v1.1")
     print ("")
     print ("Cesar")
     print ("------------------------------------------")    
@@ -185,14 +220,14 @@ def menu():
         
     except ValueError:
         
-        os.system("clear")
+        clearconsole()
         print ("Introduzca numero decimal...")
         time.sleep(2)
         main()
          
     if (opt == 1):
         
-        os.system("clear")
+        clearconsole()
         print ("Gl0kyCrypt v1.0")
         print ("")
         print ("Cesar -> [1]: Encriptar un archivo.")
@@ -202,7 +237,7 @@ def menu():
         
     if (opt == 2):  
          
-        os.system("clear")
+        clearconsole()
         print ("Gl0kyCrypt v1.0")
         print ("")
         print ("Cesar -> [2]: Desencriptar un archivo.")
@@ -212,7 +247,7 @@ def menu():
     
     if (opt == 3): 
           
-        os.system("clear")
+        clearconsole()
         print ("Gl0kyCrypt v1.0")
         print ("")
         print ("Cesar -> [3]: Encriptar una cadena de texto.")
@@ -222,7 +257,7 @@ def menu():
     
     if (opt == 4):
         
-        os.system("clear")
+        clearconsole()
         print ("Gl0kyCrypt v1.0")
         print ("")
         print ("Cesar -> [4]: Desencriptar una cadena de texto.")
@@ -232,10 +267,15 @@ def menu():
 
     if (opt == 5):
         
+        clearconsole()
+        print ("Gracias por usar...")
+        time.sleep(2)
+        sys.exit(1)
         return False;
     
     else:
-        os.system("clear")
+
+        clearconsole()
         print("Opcion invalida...")
         time.sleep(2)
         return True;
@@ -244,6 +284,7 @@ def main():
     
     while(menu() == True):
         
+        clearconsole()
         menu()
         
 if __name__ == "__main__":
